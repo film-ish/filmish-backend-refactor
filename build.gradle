@@ -1,7 +1,10 @@
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
+
 plugins {
     id 'java'
     id 'org.springframework.boot' apply false
     id 'io.spring.dependency-management' apply false
+    id 'org.asciidoctor.jvm.convert' apply false
 }
 
 allprojects {
@@ -23,21 +26,59 @@ subprojects {
             languageVersion = JavaLanguageVersion.of(javaVersion)
         }
     }
+    configurations {
+        asciidoctorExt
+    }
 
     dependencies {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 
-    tasks.getByName('bootJar') {
-        enabled = false
+    bootJar.enabled = false
+    jar.enabled = true
+
+    test {
+        useJUnitPlatform {
+            excludeTags('develop', 'restdocs')
+        }
+        jvmArgs '-Xshare:off'
     }
 
-    tasks.getByName('jar') {
-        enabled = true
+    tasks.register('unitTest', Test) {
+        group = 'verification'
+        testClassesDirs = sourceSets.test.output.classesDirs // 명시적 설정
+        classpath = sourceSets.test.runtimeClasspath         // 명시적 설정'
+        useJUnitPlatform {
+            excludeTags('develop', 'context', 'restdocs')
+        }
     }
 
-    tasks.named('test') {
-        useJUnitPlatform()
+    tasks.register('contextTest', Test) {
+        group = 'verification'
+        testClassesDirs = sourceSets.test.output.classesDirs // 명시적 설정
+        classpath = sourceSets.test.runtimeClasspath         // 명시적 설정'
+        useJUnitPlatform {
+            includeTags('context')
+        }
     }
+
+    tasks.register('restDocsTest', Test) {
+        group = 'verification'
+        testClassesDirs = sourceSets.test.output.classesDirs // 명시적 설정
+        classpath = sourceSets.test.runtimeClasspath         // 명시적 설정'
+        useJUnitPlatform {
+            includeTags('restdocs')
+        }
+    }
+
+    tasks.register('developTest', Test) {
+        group = 'verification'
+        testClassesDirs = sourceSets.test.output.classesDirs // 명시적 설정
+        classpath = sourceSets.test.runtimeClasspath         // 명시적 설정'
+        useJUnitPlatform {
+            includeTags('develop')
+        }
+    }
+
 }
