@@ -52,4 +52,47 @@ class MakerControllerTest extends RestDocsTest {
                         )
                 ));
     }
+
+    @Test
+    void findMaker() {
+        given()
+                .contentType(ContentType.JSON)
+                .get("makers/{makerId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "find-maker",
+                        pathParameters(parameterWithName("makerId")
+                                .description("영화인의 아이디")
+                ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("영화인의 아이디"),
+                                fieldWithPath("data.userId")
+                                        .type(JsonFieldType.NUMBER)
+                                                .description("영화인의 사용자 아이디"),
+                                fieldWithPath("data.name")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이름"),
+                                fieldWithPath("data.image")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이미지"),
+                                fieldWithPath("data.qnaCnt")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("영화인과의 대화 개수"),
+                                fieldWithPath("data.filmography")
+                                        .type(JsonFieldType.ARRAY)
+                                        .description("영화인의 필모그래피"),
+                                fieldWithPath("data.filmography[].id").type(JsonFieldType.NUMBER).description("영화의 아이디"),
+                                fieldWithPath("data.filmography[].name").type(JsonFieldType.STRING).description("영화 제목"),
+                                fieldWithPath("data.filmography[].poster").type(JsonFieldType.STRING).description("영화 포스터"),
+                                fieldWithPath("data.filmography[].stillCut").type(JsonFieldType.STRING).description("영화 스틸컷"),
+                                fieldWithPath("data.filmography[].pubDate").type(JsonFieldType.STRING).description("영화 개봉일")
+                        )));
+    }
+
 }
