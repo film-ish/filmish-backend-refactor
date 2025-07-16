@@ -1,4 +1,4 @@
-package com.ssafy.s12p21d206.achu.test.api;
+package com.filmish.backend.test.api;
 
 import org.springframework.restdocs.snippet.Attributes.Attribute;
 

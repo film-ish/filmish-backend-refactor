@@ -1,4 +1,4 @@
-package com.ssafy.s12p21d206.achu.test.api;
+package com.filmish.backend.test.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -46,7 +46,7 @@ public abstract class RestDocsTest {
         // Request Preprocessors
         OperationPreprocessor requestUriModifier = Preprocessors.modifyUris()
                 .scheme("https")
-                .host("api.dev.achu.dukcode.org")
+                .host("api.dev.filmish.docs.org")
                 .removePort();
 
         OperationPreprocessor requestHeaderModifier = Preprocessors.modifyHeaders()
