@@ -95,4 +95,31 @@ class MakerControllerTest extends RestDocsTest {
                         )));
     }
 
+    @Test
+    void modifyMaker() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new ModifyMakerInfoRequest("영화인명2", "image2.jpg"))
+                .patch("/makers/{makerId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "modify-maker",
+                        pathParameters(
+                                parameterWithName("makerId")
+                                        .description("영화인의 아이디")),
+                        requestFields(
+                                fieldWithPath("name")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이름"),
+                                fieldWithPath("image")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이미지")
+                ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)")
+                        )));
+    }
 }

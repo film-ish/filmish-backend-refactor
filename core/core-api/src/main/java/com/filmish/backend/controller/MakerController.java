@@ -1,10 +1,7 @@
 package com.filmish.backend.controller;
 
 import com.filmish.backend.support.response.ApiResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,11 @@ public class MakerController {
         );
         MakerDetailResponse response = new MakerDetailResponse(1L, 1L, "Maker1", "maker-image1.jpg", 1, filmography);
         return ApiResponse.success(response);
+    }
+
+    @PatchMapping("/makers/{makerId}")
+    public ApiResponse<?> modifyMaker(@PathVariable Long makerId, @RequestBody ModifyMakerInfoRequest request){
+        return ApiResponse.success();
     }
 
 }

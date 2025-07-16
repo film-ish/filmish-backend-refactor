@@ -1,3 +1,11 @@
 === [미구현] 영화인 목록
 
 operation::find-makers[snippets='http-request,http-response,response-fields']
+
+=== [미구현] 영화인 상세조회
+
+operation::find-maker[snippets='http-request,path-parameters,http-response,response-fields']
+
+=== [미구현] 영화인 정보 수정
+
+operation::modify-maker[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
