@@ -22,7 +22,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void findMaker() {
+    void findMakers() {
         given()
                 .contentType(ContentType.JSON)
                 .queryParam("cursorId", 1L)

@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class MakerController {
     @GetMapping("/makers")
-    public ApiResponse<List<MakerResponse>> makerList(@RequestParam(required = false) Long cursorId, @RequestParam Integer pageSize, @RequestParam(name="name", required = false) String name) {
+    public ApiResponse<List<MakerResponse>> findMakers(@RequestParam(required = false) Long cursorId, @RequestParam Integer pageSize, @RequestParam(name="name", required = false) String name) {
         List<MakerResponse> response = List.of(
                 new MakerResponse(1L, "Maker1", "maker1@aaaa.com", "ACTOR", "maker-image1.jpg", 1, 1, "maker1's film"),
                 new MakerResponse(2L, "Maker2", "maker2@aaaa.com", "ACTOR", "maker-image2.jpg", 2, 2, "maker2's film"),
