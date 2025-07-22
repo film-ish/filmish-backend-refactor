@@ -122,4 +122,94 @@ class MakerControllerTest extends RestDocsTest {
                                         .description("성공 여부 (예: SUCCESS 혹은 ERROR)")
                         )));
     }
+
+    @Test
+    void findQnas() {
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("cursorId", 1L)
+                .queryParam("pageSize", 5)
+                .get("/{makerId}/qna", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "find-qnas",
+                        pathParameters(
+                                parameterWithName("makerId")
+                                        .description("영화인의 아이디")),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.[].id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("영화인의 아이디"),
+                                fieldWithPath("data.[].title")
+                                        .type(JsonFieldType.STRING)
+                                        .description("QnA 게시물의 제목"),
+                                fieldWithPath("data.[].writerName")
+                                        .type(JsonFieldType.STRING)
+                                        .description("QnA 게시물 작성자"),
+                                fieldWithPath("data.[].content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("게시물 내용"),
+                                fieldWithPath("data.[].createdAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("게시물 작성일"),
+                                fieldWithPath("data.[].updatedAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("게시물 수정일"),
+                                fieldWithPath("data.[].comments")
+                                        .type(JsonFieldType.ARRAY)
+                                        .optional()
+                                        .description("게시물 덧글"),
+                                fieldWithPath("data.[].comments[].id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("덧글 id"),
+                                fieldWithPath("data.[].comments[].writerName")
+                                        .type(JsonFieldType.STRING)
+                                        .description("덧글 작성자"),
+                                fieldWithPath("data.[].comments[].writerImage")
+                                        .type(JsonFieldType.STRING)
+                                        .description("덧글 작성자 이미지"),
+                                fieldWithPath("data.[].comments[].content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("덧글 내용"),
+                                fieldWithPath("data.[].comments[].createdAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("덧글 작성일"),
+                                fieldWithPath("data.[].comments[].updatedAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("덧글 수정일"),
+                                fieldWithPath("data.[].comments[].replies")
+                                        .type(JsonFieldType.ARRAY)
+                                        .optional()
+                                        .description("대댓글, 대댓글목록은 comments[]구성과 같음"),
+                                fieldWithPath("data.[].comments[].replies[].id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("대댓글 id"),
+                                fieldWithPath("data.[].comments[].replies[].writerName")
+                                        .type(JsonFieldType.STRING)
+                                        .description("대댓글 작성자"),
+                                fieldWithPath("data.[].comments[].replies[].writerImage")
+                                        .type(JsonFieldType.STRING)
+                                        .description("대댓글 작성자 이미지"),
+                                fieldWithPath("data.[].comments[].replies[].content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("대댓글 내용"),
+                                fieldWithPath("data.[].comments[].replies[].createdAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("대댓글 작성일"),
+                                fieldWithPath("data.[].comments[].replies[].updatedAt")
+                                        .type(JsonFieldType.STRING)
+                                        .description("대댓글 수정일"),
+                                fieldWithPath("data.[].comments[].replies[].replies")
+                                        .type(JsonFieldType.ARRAY)
+                                        .optional()
+                                        .description("대대댓글 목록 (빈 배열)")
+                        )
+                        )
+                );
+
+    }
 }

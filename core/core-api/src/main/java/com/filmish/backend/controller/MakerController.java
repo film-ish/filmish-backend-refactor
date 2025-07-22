@@ -3,6 +3,7 @@ package com.filmish.backend.controller;
 import com.filmish.backend.support.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,21 @@ public class MakerController {
     @PatchMapping("/makers/{makerId}")
     public ApiResponse<?> modifyMaker(@PathVariable Long makerId, @RequestBody ModifyMakerInfoRequest request){
         return ApiResponse.success();
+    }
+
+    @GetMapping("/{makerId}/qna")
+    public ApiResponse<List<QnaResponse>> findQnas(@PathVariable Long makerId, @RequestParam(required = false) Long cursorId, @RequestParam Integer pageSize){
+        List<QnaCommentResponse> replies = List.of(new QnaCommentResponse(2L, "Writer2", "WriterImage2.jpg", "comment content2", Instant.parse("2025-07-20T00:00:00Z"), Instant.parse("2025-07-20T12:30:45Z"), null)
+                );
+        List<QnaCommentResponse> comments = List.of(
+                new QnaCommentResponse(1L, "Writer1", "WriterImage1.jpg", "comment content1", Instant.parse("2025-07-21T00:00:00Z"), Instant.parse("2025-07-21T12:30:45Z"), replies),
+                new QnaCommentResponse(2L, "Writer2", "WriterImage2.jpg", "comment content2", Instant.parse("2025-07-20T00:00:00Z"), Instant.parse("2025-07-20T12:30:45Z"), replies)
+        );
+        List<QnaResponse> response = List.of(
+                new QnaResponse(1L, "title1", "Writer1", Instant.parse("2025-07-19T00:00:00Z"), Instant.parse("2025-07-19T00:00:00Z"), "QnaContent1", comments),
+                new QnaResponse(2L, "title2", "Writer2", Instant.parse("2025-07-19T00:00:00Z"), Instant.parse("2025-07-19T00:00:00Z"), "QnaContent2", null)
+        );
+    return ApiResponse.success(response);
     }
 
 }
