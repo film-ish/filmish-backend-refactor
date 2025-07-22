@@ -1,0 +1,125 @@
+package com.filmish.backend.controller;
+
+import com.filmish.backend.test.api.RestDocsTest;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.restdocs.payload.JsonFieldType;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+
+class MakerControllerTest extends RestDocsTest {
+
+    MakerController controller;
+
+    @BeforeEach
+    public void setup(){
+        controller = new MakerController();
+        mockMvc = mockController(controller);
+    }
+
+    @Test
+    void findMakers() {
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("cursorId", 1L)
+                .queryParam("pageSize", 5)
+                .get("/makers")
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "find-makers",
+                        queryParameters(parameterWithName("cursorId")
+                                .optional()
+                                .description("페이지네이션 커서, 이전 페이지의 마지막 프로젝트 ID를 입력.첫 페이지 요청 시 생략하거나 빈값으로 요청)"),
+                                parameterWithName("pageSize")
+                                        .description("페이지 크기")),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.[].id").type(JsonFieldType.NUMBER).description("영화인의 아이디"),
+                                fieldWithPath("data.[].name").type(JsonFieldType.STRING).description("영화인의 이름"),
+                                fieldWithPath("data.[].email").type(JsonFieldType.STRING).description("영화인의 이메일"),
+                                fieldWithPath("data.[].role").type(JsonFieldType.STRING).description("영화인의 역할"),
+                                fieldWithPath("data.[].image").type(JsonFieldType.STRING).description("영화인의 이미지"),
+                                fieldWithPath("data.[].qnaCnt").type(JsonFieldType.NUMBER).description("영화인과의 대화 개수"),
+                                fieldWithPath("data.[].indieCnt").type(JsonFieldType.NUMBER).description("영화인의 독립영화 작품 수"),
+                                fieldWithPath("data.[].movieTitle").type(JsonFieldType.STRING).description("영화인의 최근 작품명")
+                        )
+                ));
+    }
+
+    @Test
+    void findMaker() {
+        given()
+                .contentType(ContentType.JSON)
+                .get("makers/{makerId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "find-maker",
+                        pathParameters(parameterWithName("makerId")
+                                .description("영화인의 아이디")
+                ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("영화인의 아이디"),
+                                fieldWithPath("data.userId")
+                                        .type(JsonFieldType.NUMBER)
+                                                .description("영화인의 사용자 아이디"),
+                                fieldWithPath("data.name")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이름"),
+                                fieldWithPath("data.image")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이미지"),
+                                fieldWithPath("data.qnaCnt")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("영화인과의 대화 개수"),
+                                fieldWithPath("data.filmography")
+                                        .type(JsonFieldType.ARRAY)
+                                        .description("영화인의 필모그래피"),
+                                fieldWithPath("data.filmography[].id").type(JsonFieldType.NUMBER).description("영화의 아이디"),
+                                fieldWithPath("data.filmography[].name").type(JsonFieldType.STRING).description("영화 제목"),
+                                fieldWithPath("data.filmography[].poster").type(JsonFieldType.STRING).description("영화 포스터"),
+                                fieldWithPath("data.filmography[].stillCut").type(JsonFieldType.STRING).description("영화 스틸컷"),
+                                fieldWithPath("data.filmography[].pubDate").type(JsonFieldType.STRING).description("영화 개봉일")
+                        )));
+    }
+
+    @Test
+    void modifyMaker() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new ModifyMakerInfoRequest("영화인명2", "image2.jpg"))
+                .patch("/makers/{makerId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "modify-maker",
+                        pathParameters(
+                                parameterWithName("makerId")
+                                        .description("영화인의 아이디")),
+                        requestFields(
+                                fieldWithPath("name")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이름"),
+                                fieldWithPath("image")
+                                        .type(JsonFieldType.STRING)
+                                        .description("영화인의 이미지")
+                ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)")
+                        )));
+    }
+}
