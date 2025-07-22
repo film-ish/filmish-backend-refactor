@@ -212,4 +212,39 @@ class MakerControllerTest extends RestDocsTest {
                 );
 
     }
+
+    @Test
+    void appendQna() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new AppendQnaRequest(1L, "QnA title", "QnA content"))
+                .post("/{makerId}/qna", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "append-qna",
+                        pathParameters(
+                                parameterWithName("makerId")
+                                        .description("영화인의 아이디")),
+                        requestFields(
+                                fieldWithPath("id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("QnA 게시물 아이디"),
+                                fieldWithPath("title")
+                                        .type(JsonFieldType.STRING)
+                                        .description("QnA 게시물 제목"),
+                                fieldWithPath("content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("QnA 게시물 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("생성된 QnA 게시물의 id")
+                        )
+                ));
+    }
 }

@@ -1,6 +1,7 @@
 package com.filmish.backend.controller;
 
 import com.filmish.backend.support.response.ApiResponse;
+import com.filmish.backend.support.response.DefaultIdResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -46,6 +47,12 @@ public class MakerController {
                 new QnaResponse(2L, "title2", "Writer2", Instant.parse("2025-07-19T00:00:00Z"), Instant.parse("2025-07-19T00:00:00Z"), "QnaContent2", null)
         );
     return ApiResponse.success(response);
+    }
+
+    @PostMapping("/{makerId}/qna")
+    public ApiResponse<DefaultIdResponse> appendQna(@PathVariable Long makerId, @RequestBody AppendQnaRequest request){
+        DefaultIdResponse response = new DefaultIdResponse(1L);
+        return ApiResponse.success(response);
     }
 
 }

@@ -13,3 +13,7 @@ operation::modify-maker[snippets='http-request,path-parameters,request-fields,ht
 === [미구현] 영화인과의 대화 목록
 
 operation::find-qnas[snippets='http-request,path-parameters,response-fields']
+
+=== [미구현] 영화인과의 대화 등록
+
+operation::append-qna[snippets='http-request,path-parameters,request-fields,response-fields']
