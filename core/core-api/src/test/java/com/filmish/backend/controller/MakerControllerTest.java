@@ -294,4 +294,37 @@ class MakerControllerTest extends RestDocsTest {
                                         .description("성공 여부 (예: SUCCESS 혹은 ERROR)"))
                 ));
     }
+
+    @Test
+    public void appendComment() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new AppendCommentRequest("comment content", 1L))
+                .post("/{qnaId}/comments", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "append-comment",
+                        pathParameters(
+                                parameterWithName("qnaId")
+                                        .description("QnA 게시물의 Id")),
+                        requestFields(
+                                fieldWithPath("content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("댓글의 내용"),
+                                fieldWithPath("parentId")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("댓글의 Id")
+                                        .optional()
+                        ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
+                                fieldWithPath("data.id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("생성된 댓글의 id")
+                        )
+                ));
+    }
 }

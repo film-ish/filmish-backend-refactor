@@ -25,3 +25,7 @@ operation::modify-qna[snippets='http-request,path-parameters,request-fields,resp
 === [미구현] 영화인과의 대화 삭제
 
 operation::delete-qna[snippets='http-request,path-parameters,response-fields']
+
+=== [미구현] 영화인과의 대화 댓글 등록
+
+operation::append-comment[snippets='http-request,path-parameters,request-fields,response-fields']

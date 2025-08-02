@@ -64,4 +64,10 @@ public class MakerController {
     public ApiResponse<?> deleteQna(@PathVariable Long qnaId){
         return ApiResponse.success();
     }
+
+    @PostMapping("/{qnaId}/comments")
+    public ApiResponse<DefaultIdResponse> appendComment(@PathVariable Long qnaId, @RequestBody AppendCommentRequest request){
+        DefaultIdResponse response = new DefaultIdResponse(1L);
+        return ApiResponse.success(response);
+    }
 }
