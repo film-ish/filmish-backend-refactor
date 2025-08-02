@@ -307,7 +307,7 @@ class MakerControllerTest extends RestDocsTest {
                         "append-comment",
                         pathParameters(
                                 parameterWithName("qnaId")
-                                        .description("QnA 게시물의 Id")),
+                                        .description("QnA 게시물의 아이디")),
                         requestFields(
                                 fieldWithPath("content")
                                         .type(JsonFieldType.STRING)
@@ -324,6 +324,33 @@ class MakerControllerTest extends RestDocsTest {
                                 fieldWithPath("data.id")
                                         .type(JsonFieldType.NUMBER)
                                         .description("생성된 댓글의 id")
+                        )
+                ));
+    }
+
+    @Test
+    public void modifyComment() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new ModifyCommentRequest("comment content"))
+                .put("/comments/{commentId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "modify-comment",
+                        pathParameters(
+                                parameterWithName("commentId")
+                                        .description("댓글의 아이디")
+                        ),
+                        requestFields(
+                                fieldWithPath("content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("댓글의 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)")
                         )
                 ));
     }

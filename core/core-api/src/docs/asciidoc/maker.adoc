@@ -29,3 +29,7 @@ operation::delete-qna[snippets='http-request,path-parameters,response-fields']
 === [미구현] 영화인과의 대화 댓글 등록
 
 operation::append-comment[snippets='http-request,path-parameters,request-fields,response-fields']
+
+=== [미구현] 영화인과의 대화 댓글 수정
+
+operation::modify-comment[snippets='http-request,path-parameters,request-fields,response-fields']

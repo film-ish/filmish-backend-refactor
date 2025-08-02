@@ -70,4 +70,9 @@ public class MakerController {
         DefaultIdResponse response = new DefaultIdResponse(1L);
         return ApiResponse.success(response);
     }
+
+    @PutMapping("/comments/{commentId}")
+    public ApiResponse<?> modifyComment(@PathVariable Long commentId, @RequestBody ModifyCommentRequest request){
+        return ApiResponse.success();
+    }
 }
