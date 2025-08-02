@@ -354,4 +354,25 @@ class MakerControllerTest extends RestDocsTest {
                         )
                 ));
     }
+
+    @Test
+    public void deleteComment() {
+        given()
+                .contentType(ContentType.JSON)
+                .delete("comment/{commentId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "delete-comment",
+                        pathParameters(
+                                parameterWithName("commentId")
+                                        .description("댓글의 아이디")
+                        ),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)")
+                        )
+                ));
+    }
 }

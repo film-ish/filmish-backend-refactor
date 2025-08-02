@@ -75,4 +75,9 @@ public class MakerController {
     public ApiResponse<?> modifyComment(@PathVariable Long commentId, @RequestBody ModifyCommentRequest request){
         return ApiResponse.success();
     }
+
+    @DeleteMapping("/comment/{commentId}")
+    public ApiResponse<?> deleteComment(@PathVariable Long commentId){
+        return ApiResponse.success();
+    }
 }
