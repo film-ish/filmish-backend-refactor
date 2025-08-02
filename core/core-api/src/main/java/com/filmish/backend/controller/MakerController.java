@@ -55,4 +55,8 @@ public class MakerController {
         return ApiResponse.success(response);
     }
 
+    @PutMapping("/{qnaId}")
+    public ApiResponse<?> modifyQna(@PathVariable Long qnaId, @RequestBody ModifyQnaRequest request){
+        return ApiResponse.success();
+    }
 }

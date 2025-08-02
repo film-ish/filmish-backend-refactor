@@ -17,3 +17,7 @@ operation::find-qnas[snippets='http-request,path-parameters,response-fields']
 === [미구현] 영화인과의 대화 등록
 
 operation::append-qna[snippets='http-request,path-parameters,request-fields,response-fields']
+
+=== [미구현] 영화인과의 대화 수정
+
+operation::modify-qna[snippets='http-request,path-parameters,request-fields,response-fields']
