@@ -59,4 +59,9 @@ public class MakerController {
     public ApiResponse<?> modifyQna(@PathVariable Long qnaId, @RequestBody ModifyQnaRequest request){
         return ApiResponse.success();
     }
+
+    @DeleteMapping("/{qnaId}")
+    public ApiResponse<?> deleteQna(@PathVariable Long qnaId){
+        return ApiResponse.success();
+    }
 }

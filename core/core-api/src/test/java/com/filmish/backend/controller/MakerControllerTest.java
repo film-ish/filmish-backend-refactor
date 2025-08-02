@@ -22,7 +22,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void findMakers() {
+    public void findMakers() {
         given()
                 .contentType(ContentType.JSON)
                 .queryParam("cursorId", 1L)
@@ -54,7 +54,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void findMaker() {
+    public void findMaker() {
         given()
                 .contentType(ContentType.JSON)
                 .get("makers/{makerId}", 1L)
@@ -96,7 +96,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void modifyMaker() {
+    public void modifyMaker() {
         given()
                 .contentType(ContentType.JSON)
                 .body(new ModifyMakerInfoRequest("영화인명2", "image2.jpg"))
@@ -124,7 +124,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void findQnas() {
+    public void findQnas() {
         given()
                 .contentType(ContentType.JSON)
                 .queryParam("cursorId", 1L)
@@ -214,7 +214,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void appendQna() {
+    public void appendQna() {
         given()
                 .contentType(ContentType.JSON)
                 .body(new AppendQnaRequest(1L, "QnA title", "QnA content"))
@@ -249,7 +249,7 @@ class MakerControllerTest extends RestDocsTest {
     }
 
     @Test
-    void modifyQna() {
+    public void modifyQna() {
         given()
                 .contentType(ContentType.JSON)
                 .body(new ModifyQnaRequest("QnA Title", "QnA content"))
@@ -268,6 +268,26 @@ class MakerControllerTest extends RestDocsTest {
                                 fieldWithPath("content")
                                         .type(JsonFieldType.STRING)
                                         .description("QnA 게시물 내용")),
+                        responseFields(
+                                fieldWithPath("result")
+                                        .type(JsonFieldType.STRING)
+                                        .description("성공 여부 (예: SUCCESS 혹은 ERROR)"))
+                ));
+    }
+
+    @Test
+    public void deleteQna() {
+        given()
+                .contentType(ContentType.JSON)
+                .delete("/{qnaId}", 1L)
+                .then()
+                .status(HttpStatus.OK)
+                .apply(document(
+                        "delete-qna",
+                        pathParameters(
+                                parameterWithName("qnaId")
+                                        .description("QnA 게시물 아이디")
+                        ),
                         responseFields(
                                 fieldWithPath("result")
                                         .type(JsonFieldType.STRING)
