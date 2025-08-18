@@ -76,21 +76,22 @@ class MovieControllerTest extends RestDocsTest {
                 ),
                 responseFields(
                     fieldWithPath("result").type(JsonFieldType.STRING).description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
-                    fieldWithPath("data.movieId").type(JsonFieldType.NUMBER).description("영화 아이디"),
+                    // 실제 응답에 맞춰 필드명 수정
+                    fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("영화 아이디"),
                     fieldWithPath("data.title").type(JsonFieldType.STRING).description("영화 제목"),
                     fieldWithPath("data.plot").type(JsonFieldType.STRING).description("영화 줄거리"),
-                    fieldWithPath("data.releaseDate").type(JsonFieldType.STRING).description("개봉일"),
+                    fieldWithPath("data.pubDate").type(JsonFieldType.STRING).description("개봉일"),
                     fieldWithPath("data.runningTime").type(JsonFieldType.NUMBER).description("상영 시간 (분)"),
-                    fieldWithPath("data.avgRating").type(JsonFieldType.NUMBER).description("평균 별점"),
-                    fieldWithPath("data.movieType").type(JsonFieldType.STRING).description("영화 타입 (예: INDEPENDENT)"),
-                    fieldWithPath("data.liked").type(JsonFieldType.BOOLEAN).description("현재 사용자의 '보고싶어요' 여부"),
+                    fieldWithPath("data.averageRating").type(JsonFieldType.NUMBER).description("평균 별점"),
+                    fieldWithPath("data.type").type(JsonFieldType.STRING).description("영화 타입 (예: INDEPENDENT)"),
+                    fieldWithPath("data.like").type(JsonFieldType.BOOLEAN).description("현재 사용자의 '보고싶어요' 여부"),
                     fieldWithPath("data.posters").type(JsonFieldType.ARRAY).description("포스터 이미지 URL 목록"),
-                    fieldWithPath("data.stills").type(JsonFieldType.ARRAY).description("스틸컷 이미지 URL 목록"),
+                    fieldWithPath("data.stillcuts").type(JsonFieldType.ARRAY).description("스틸컷 이미지 URL 목록"),
                     fieldWithPath("data.makers").type(JsonFieldType.ARRAY).description("참여 영화인 목록"),
-                    fieldWithPath("data.makers[].makerId").type(JsonFieldType.NUMBER).description("영화인 아이디"),
+                    fieldWithPath("data.makers[].id").type(JsonFieldType.NUMBER).description("영화인 아이디"),
                     fieldWithPath("data.makers[].name").type(JsonFieldType.STRING).description("영화인 이름"),
-                    fieldWithPath("data.makers[].role").type(JsonFieldType.STRING).description("역할 (예: DIRECTOR, ACTOR)"),
-                    fieldWithPath("data.makers[].thumbnail").type(JsonFieldType.STRING).description("영화인 썸네일 이미지 URL")
+                    fieldWithPath("data.makers[].type").type(JsonFieldType.STRING).description("역할 (예: DIRECTOR, ACTOR)"),
+                    fieldWithPath("data.makers[].thumbnailImage").type(JsonFieldType.STRING).description("영화인 썸네일 이미지 URL")
                 )
             ));
     }
@@ -116,18 +117,19 @@ class MovieControllerTest extends RestDocsTest {
                 ),
                 responseFields(
                     fieldWithPath("result").type(JsonFieldType.STRING).description("성공 여부 (예: SUCCESS 혹은 ERROR)"),
-                    fieldWithPath("data.[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
-                    fieldWithPath("data.[].movieId").type(JsonFieldType.NUMBER).description("영화 아이디"),
+                    // 실제 응답에 맞춰 필드명 수정
+                    fieldWithPath("data.[].id").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
+                    fieldWithPath("data.[].indieId").type(JsonFieldType.NUMBER).description("독립 영화 아이디"),
                     fieldWithPath("data.[].title").type(JsonFieldType.STRING).description("리뷰 제목"),
                     fieldWithPath("data.[].content").type(JsonFieldType.STRING).description("리뷰 내용"),
-                    fieldWithPath("data.[].writerNickname").type(JsonFieldType.STRING).description("작성자 닉네임"),
-                    fieldWithPath("data.[].writerProfileImage").type(JsonFieldType.STRING).description("작성자 프로필 이미지 URL"),
+                    fieldWithPath("data.[].writerName").type(JsonFieldType.STRING).description("작성자 닉네임"),
+                    fieldWithPath("data.[].writerImage").type(JsonFieldType.STRING).description("작성자 프로필 이미지 URL"),
                     fieldWithPath("data.[].createdAt").type(JsonFieldType.STRING).description("작성 시간"),
                     fieldWithPath("data.[].updatedAt").type(JsonFieldType.STRING).description("수정 시간"),
-                    fieldWithPath("data.[].viewCount").type(JsonFieldType.NUMBER).description("조회수"),
+                    fieldWithPath("data.[].views").type(JsonFieldType.NUMBER).description("조회수"),
                     fieldWithPath("data.[].images").type(JsonFieldType.ARRAY).description("리뷰 이미지 목록"),
-                    fieldWithPath("data.[].images[].imageId").type(JsonFieldType.NUMBER).description("이미지 아이디"),
-                    fieldWithPath("data.[].images[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL")
+                    fieldWithPath("data.[].images[].id").type(JsonFieldType.NUMBER).description("이미지 아이디"),
+                    fieldWithPath("data.[].images[].path").type(JsonFieldType.STRING).description("이미지 URL")
                 )
             ));
     }
@@ -146,8 +148,9 @@ class MovieControllerTest extends RestDocsTest {
                     fieldWithPath("data.[].id").type(JsonFieldType.NUMBER).description("상업 영화 아이디"),
                     fieldWithPath("data.[].title").type(JsonFieldType.STRING).description("영화 제목"),
                     fieldWithPath("data.[].poster").type(JsonFieldType.STRING).description("포스터 이미지 URL"),
-                    fieldWithPath("data.[].releaseDate").type(JsonFieldType.STRING).description("개봉일"),
-                    fieldWithPath("data.[].genres").type(JsonFieldType.ARRAY).description("장르 목록")
+                    // 실제 응답에 맞춰 필드명 수정
+                    fieldWithPath("data.[].pubDate").type(JsonFieldType.STRING).description("개봉일"),
+                    fieldWithPath("data.[].categories").type(JsonFieldType.ARRAY).description("장르 목록")
                 )
             ));
     }
